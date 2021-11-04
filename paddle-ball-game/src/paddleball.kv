@@ -1,0 +1,59 @@
+#:kivy 2.0.0
+# The *.kv file must be named the same as the *App name prefix; e.g., our game
+# is PongApp, therefore, this file must be named pong.kv
+
+<GameBall>:
+    size: 50, 50
+    canvas:
+        Ellipse:
+            pos: self.pos
+            size: self.size
+
+<PlayerPaddle>:
+    size: 25, 200
+    canvas:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+<PaddleBallGame>
+# These are rules applied to PongGame instances
+    ball: game_ball
+    player1: player_left
+    player2: player_right
+
+    canvas:
+        Rectangle:
+        # Creating the vertical line in the middle
+            # setting the rectable 5 pixels left of the horizontal center of
+            # the widget
+            pos: self.center_x - 5, 0
+            size: 10, self.height
+
+    Label:
+    # Creating score marker for player 1
+        font_size: 70
+        center_x: root.width / 4
+        top: root.top - 50
+        text: str(root.player1.score)
+
+    Label:
+    # Creating score marker for player 2
+        font_size: 70
+        center_x: root.width * 3 / 4
+        top: root.top - 50
+        text: str(root.player2.score)
+
+    GameBall:
+        id: game_ball
+        center: self.parent.center
+
+    PlayerPaddle:
+        id: player_left
+        x: root.x
+        center_y: root.center_y
+
+    PlayerPaddle:
+        id: player_right
+        x: root.width - self.width
+        center_y: root.center_y
